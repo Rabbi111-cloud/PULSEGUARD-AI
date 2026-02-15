@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { loginUser } from "../../lib/firebase";
+import { auth } from "../../lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    if (!auth) return;
+
     try {
-      await loginUser(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful");
     } catch (err) {
       alert("Login failed");
