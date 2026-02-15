@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { signupUser } from "../../lib/firebase";
+import { auth } from "../../lib/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
+    if (!auth) return;
+
     try {
-      await signupUser(email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       alert("Signup successful");
     } catch (err) {
       alert("Signup failed");
