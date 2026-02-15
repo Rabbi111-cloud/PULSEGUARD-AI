@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { auth } from "../../lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "../../lib/firebase";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    if (!auth) return;
-
     try {
+      const { getAuth, createUserWithEmailAndPassword } = await import("firebase/auth");
+      const auth = getAuth(app);
+
       await createUserWithEmailAndPassword(auth, email, password);
+
       alert("Signup successful");
     } catch (err) {
+      console.error(err);
       alert("Signup failed");
     }
   };
@@ -36,3 +38,4 @@ export default function Signup() {
     </div>
   );
 }
+
