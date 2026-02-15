@@ -1,5 +1,4 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -11,11 +10,7 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 
-// Prevent re-initialization
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
-export const auth =
-  typeof window !== "undefined" ? getAuth(app) : null;
-
-export const db =
-  typeof window !== "undefined" ? getFirestore(app) : null;
+export { app };
+export const db = getFirestore(app);
